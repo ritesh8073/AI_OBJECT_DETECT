@@ -1,115 +1,110 @@
-/* General Styles */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+body.sunny { background: linear-gradient(to right, #fceabb, #f8b500); }
+body.rainy { background: linear-gradient(to right, #4e54c8, #8f94fb); }
+body.cloudy { background: linear-gradient(to right, #757f9a, #d7dde8); }
+body.snowy { background: linear-gradient(to right, #a1c4fd, #c2e9fb); }
+body.thunderstorm { background: linear-gradient(to right, #141e30, #243b55); }
+body.foggy, body.misty { background: linear-gradient(to right, #757f9a, #d7dde8); }
+body.hazy { background: linear-gradient(to right, #b79891, #94716b); }
+body.default { background: linear-gradient(to right, #83a4d4, #b6fbff); }
 
-body {
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    animation: fadeIn 2s;
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: white;
 }
 
 .container {
-    text-align: center;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    animation: slideUp 0.5s ease-out;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s forwards;
 }
 
-h1 {
-    margin-bottom: 20px;
-    color: #333;
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-input {
-    padding: 10px;
-    width: 250px;
-    margin-right: 10px;
-    border: 2px solid #007bff;
-    border-radius: 5px;
-    font-size: 16px;
+.weather-card, .forecast-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s forwards;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
 }
 
-button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.weather-card:hover, .forecast-item:hover {
+    transform: translateY(-5px);
+}
+
+.loader {
+    border: 6px solid #3498db;
+    border-top: 6px solid transparent;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 button:hover {
-    background-color: #0056b3;
+    transform: scale(1.05);
 }
 
-.weather-result {
-    margin-top: 20px;
-    transition: opacity 0.5s ease;
+input:focus {
+    outline: none;
+    ring: 2px solid #4299e1;
 }
 
-.weather-result h2 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 10px;
+.weather-card.sunny::before, .forecast-item.sunny::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('sunny.gif') center center no-repeat;
+    opacity: 0.2;
+    z-index: 0;
+    animation: moveBg 5s linear infinite;
 }
 
-.weather-result p {
-    font-size: 18px;
-    color: #555;
+.weather-card.rainy::before, .forecast-item.rainy::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('rainy.gif') center center no-repeat;
+    opacity: 0.2;
+    z-index: 0;
+    animation: moveBg 5s linear infinite;
 }
 
-.weather-icon {
-    font-size: 50px;
-    margin: 10px;
+.weather-card.cloudy::before, .forecast-item.cloudy::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('cloudy.gif') center center no-repeat;
+    opacity: 0.2;
+    z-index: 0;
+    animation: moveBg 5s linear infinite;
 }
 
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-@keyframes slideUp {
-    0% { transform: translateY(50px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-}
-
-/* Animations for different weather conditions */
-.sunny {
-    animation: sunnyAnimation 3s infinite;
-}
-
-@keyframes sunnyAnimation {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-.rainy {
-    animation: rainyAnimation 2s infinite linear;
-}
-
-@keyframes rainyAnimation {
-    0% { opacity: 0.8; }
-    50% { opacity: 0.4; }
-    100% { opacity: 0.8; }
-}
-
-.cloudy {
-    animation: cloudyAnimation 3s infinite alternate;
-}
-
-@keyframes cloudyAnimation {
-    0% { transform: translateX(-5px); }
-    100% { transform: translateX(5px); }
+@keyframes moveBg {
+    from {
+        background-position: 0% 0%;
+    }
+    to {
+        background-position: 100% 100%;
+    }
 }
